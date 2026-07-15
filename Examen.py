@@ -11,11 +11,11 @@ validación
 espacios en blanco
 "copias" Cantidad de copias
 disponibles
-Número entero mayor
+Numero entero mayor
 o igual que cero
 "prestamo" Período de préstamo
 en días
-Número entero mayor
+Numero entero mayor
 que cero
 "disponible" ¿Hay al menos una
 copia disponible?
@@ -27,12 +27,12 @@ Cada diccionario se guarda dentro de una lista. La lista es la colección genera
 diccionarios son los libros individuales dentro de ella. El programa comienza con la
 lista vacía y la va llenando a medida que se agregan registros.
 2. Lo que debe hacer el sistema
-El sistema se controla desde un menú que aparece en pantalla cada vez que el
+El sistema se controla desde un menu que aparece en pantalla cada vez que el
 usuario termina una acción. El usuario elige una opción numérica, el programa
-ejecuta la tarea correspondiente y vuelve a mostrar el menú. Esto se repite hasta
+ejecuta la tarea correspondiente y vuelve a mostrar el menu. Esto se repite hasta
 que el usuario elige salir.
-El menú tiene seis opciones:
-========== MENÚ PRINCIPAL ==========
+El menu tiene seis opciones:
+========== MENu PRINCIPAL ==========
 1. Agregar libro
 2. Buscar libro
 3. Eliminar libro
@@ -42,16 +42,16 @@ El menú tiene seis opciones:
 =====================================
 Para implementar este comportamiento debes definir dos funciones separadas: una
 que muestre las opciones en pantalla (sin recibir nada ni retornar nada) y otra que
-lea y retorne la opción elegida por el usuario (sin recibir nada, retornando el número
+lea y retorne la opción elegida por el usuario (sin recibir nada, retornando el numero
 validado). Ambas funciones deben invocarse en cada vuelta del ciclo.
 A continuación, se describe qué debe ocurrir al elegir cada opción:
 Opción 1 - Agregar libro:
 El sistema solicita al usuario el título, las copias y el período de préstamo del libro.
 Antes de guardar el registro, verifica que cada dato cumpla su condición:
 • El nombre no puede estar vacío ni ser solo espacios en blanco.
-• Las copias deben ser un número entero mayor o igual que cero.
-• El período de préstamo debe ser un número entero mayor que cero.
-Si algún dato no cumple la condición, el sistema informa al usuario y no registra el
+• Las copias deben ser un numero entero mayor o igual que cero.
+• El período de préstamo debe ser un numero entero mayor que cero.
+Si algun dato no cumple la condición, el sistema informa al usuario y no registra el
 libro. Solo cuando todos los datos son válidos se crea el diccionario y se agrega a
 la lista.
 Para implementar esta opción debes definir una función que reciba la lista como
@@ -63,12 +63,12 @@ valor puede cambiar a
 True cuando se
 ejecute la opción 4
 (Actualizar
-disponibilidad), según
+disponibilidad), segun
 las copias del libro.
 Opción 2 - Buscar libro:
 El sistema solicita un título de libro al usuario y recorre la lista buscando un registro
 cuyo campo título coincida exactamente con el ingresado. Si lo encuentra, muestra
-la posición en la que está y sus datos. Si no existe ningún registro con ese título,
+la posición en la que está y sus datos. Si no existe ningun registro con ese título,
 informa al usuario.
 Para implementar esta opción debes definir una función que reciba la lista y el título
 a buscar como parámetros. La función recorre la lista y retorna la posición del
@@ -77,13 +77,13 @@ y decide qué hacer con él: si la posición es válida, muestra los datos del l
 posición; si es -1, muestra el mensaje de no encontrado.
 Opción 3 - Eliminar libro:
 El sistema solicita el título del libro que se desea eliminar. Para localizarlo, llama a
-la función de búsqueda definida en la opción anterior, pasándole la lista y el título
+la función de busqueda definida en la opción anterior, pasándole la lista y el título
 ingresado. Si la función retorna una posición válida, el sistema elimina el registro en
 esa posición. Si retorna -1, informa al usuario con el siguiente mensaje:
 El libro 'titulo' no se encuentra registrado.
 Opción 4 - Actualizar disponibilidad:
 El sistema recorre la lista completa de libros y actualiza el campo "disponible" de
-cada registro según sus copias: si las copias son mayor o igual a 1, el campo pasa
+cada registro segun sus copias: si las copias son mayor o igual a 1, el campo pasa
 a True; si es menor, queda en False. Esta operación afecta a todos los registros de
 la lista sin excepción.
 Para implementar esta opción debes definir una función que reciba la lista como
@@ -104,12 +104,15 @@ Préstamo: 3
 Estado: SIN COPIAS
 *********************************************
 Opción 6 - Salir:
-El sistema termina la ejecución de forma limpia, sin errores. El ciclo del menú se
+El sistema termina la ejecución de forma limpia, sin errores. El ciclo del menu se
 detiene y el programa finaliza con un mensaje de despedida:
 “Gracias por usar el sistema. Vuelva Pronto” """
 
+
+
+print("Bienvenido al sistema de gestión de libros")
 def Menu_principal():
-    print("========== MENÚ PRINCIPAL ==========")
+    print("========== MENu PRINCIPAL ==========")
     print("1. Agregar libro")
     print("2. Buscar libro")
     print("3. Eliminar libro")
@@ -119,12 +122,52 @@ def Menu_principal():
     print("=====================================")
 
 def leer_opcion():
+    Menu_principal()
     while True:
         try:
             opcion = int(input("Ingrese una opción (1-6): "))
             if 1 <= opcion <= 6:
                 return opcion
             else:
-                print("Opción invalida debe ser un numero entre 1 y 6.")
+                print("Opcion invalida debe ser un numero entre 1 y 6.")
         except ValueError:
-            print("Entrada invalida Por favor, ingrese un numero entero.")
+            print("Entrada invalida por favor, ingrese un numero entero.")
+
+def agregar_libro(lista_libros):
+    titulo = input("Ingrese el título del libro: ").strip()
+    if not validar_titulo(titulo):
+        print("Error: El título no puede estar vacío ni ser solo espacios en blanco.")
+        return
+    try:
+        copias = int(input("Ingrese la cantidad de copias disponibles: "))
+        if not validar_copias(copias):
+            print("Error la cantidad de copias debe ser un numero entero mayor o igual que cero.")
+            return
+    except ValueError:
+        print("Error la cantidad de copias debe ser un numero entero.")
+        return
+    try:
+        prestamo = int(input("Ingrese el período de prestamo en dias: "))
+        if not validar_prestamo(prestamo):
+            print("Error el período de prestamo debe ser un numero entero mayor que cero")
+            return
+    except ValueError:
+        print("Error el periodo de prestamo debe ser un numero entero")
+        return
+    libro = {
+        "titulo": titulo,
+        "copias": copias,
+        "prestamo": prestamo,
+        "disponible": copias > 0
+    }
+    lista_libros.append(libro)
+    print(f"Libro '{titulo}' agregado exitosamente")
+
+def validar_titulo(titulo):
+    return bool(titulo and titulo.strip())
+
+def validar_copias(copias):
+    return isinstance(copias, int) and copias >= 0
+
+def validar_prestamo(prestamo):
+    return isinstance(prestamo, int) and prestamo > 0
