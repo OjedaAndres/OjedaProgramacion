@@ -64,6 +64,7 @@ def buscar_libro(lista_libros, titulo):
         if libro["titulo"] == titulo:
             return index
     return -1
+
 def eliminar_libro(lista_libros):
     titulo = input("Ingrese el titulo que desea eliminar: ").strip()
     index = buscar_libro(lista_libros, titulo)
@@ -72,3 +73,8 @@ def eliminar_libro(lista_libros):
         print(f"Libro '{titulo}' eliminado exitosamente")
     else:
         print(f"Libro '{titulo}' no encontrado")
+
+def actualizar_disponibilidad(lista_libros):
+    for libro in lista_libros:
+        libro['disponible'] = libro['copias'] > 0
+    print("Disponibilidad de libros actualizada exitosamente")
