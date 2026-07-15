@@ -1,5 +1,5 @@
 def Menu_principal():
-    print("========== MENu PRINCIPAL ==========")
+    print("\n========== MENu PRINCIPAL ==========")
     print("1. Agregar libro")
     print("2. Buscar libro")
     print("3. Eliminar libro")
@@ -12,7 +12,7 @@ def leer_opcion():
     Menu_principal()
     while True:
         try:
-            opcion = int(input("Ingrese una opción (1-6): "))
+            opcion = int(input("\nIngrese una opción (1-6): "))
             if 1 <= opcion <= 6:
                 return opcion
             else:
@@ -72,7 +72,7 @@ def eliminar_libro(lista_libros):
         del lista_libros[index]
         print(f"Libro '{titulo}' eliminado exitosamente")
     else:
-        print(f"Libro '{titulo}' no encontrado")
+        print(f"El libro '{titulo}' no se encuentra registrado")
 
 def actualizar_disponibilidad(lista_libros):
     for libro in lista_libros:
@@ -89,3 +89,34 @@ def mostrar_libros(lista_libros):
         print(f"Prestamo: {libro['prestamo']}")
         print(f"Estado: {estado}")
         print("********************************************")
+
+def main():
+    lista_libros = []
+    while True:
+        opcion = leer_opcion()
+        if opcion == 1:
+            agregar_libro(lista_libros)
+        elif opcion == 2:
+            titulo = input("Ingrese el titulo del libro a buscar: ").strip()
+            index = buscar_libro(lista_libros, titulo)
+            if index != -1:
+                libro = lista_libros[index]
+                estado = "DISPONIBLE" if libro['disponible'] else "SIN COPIAS"
+                print(f"Libro encontrado en la posición {index}:")
+                print(f"Titulo: {libro['titulo']}")
+                print(f"Copias: {libro['copias']}")
+                print(f"Prestamo: {libro['prestamo']}")
+                print(f"Estado: {estado}")
+            else:
+                print(f"El libro '{titulo}' no se encuentra registrado")
+        elif opcion == 3:
+            eliminar_libro(lista_libros)
+        elif opcion == 4:
+            actualizar_disponibilidad(lista_libros)
+        elif opcion == 5:
+            mostrar_libros(lista_libros)
+        elif opcion == 6:
+            print("Gracias por usar el sistema. Vuelva Pronto")
+            break
+if __name__ == "__main__":
+    main()
